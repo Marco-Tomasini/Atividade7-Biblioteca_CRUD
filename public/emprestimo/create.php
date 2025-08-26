@@ -2,67 +2,68 @@
 
 include '../db.php';
 
-$sql = "SELECT * FROM times";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = trim($_POST['nome']);
+    $nacionalidade = trim($_POST['nacionalidade']);
+    $ano_nascimento = trim($_POST['ano_nascimento']);
 
-$result = $conn->query($sql);
+    $sql = "INSERT INTO autores (nome, nacionalidade, ano_nascimento) VALUES ('$name', '$nacionalidade', '$ano_nascimento')";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = $_POST['nome'];
-    $posi = $_POST['positions'];
-    $num_cami = $_POST['num_cami'];
-    $time = $_POST['times'];
 
-    $sql = "INSERT INTO jogadores (nome, posicao, numero_camisa, time_id) VALUES ('$nome', '$posi', '$num_cami', '$time')";
+    if ($conn->query($sql) === true) {
+        echo "Registro criado com sucesso!
+                <a href='read.php'>Ver registros.</a>";
+    } else {
+        echo "Erro: " . $conn->error;
+    }
 
-    if($conn ->query($sql) === true)
-        {echo"Jogador criado com sucesso!<a href='read.php'>Ver jogadores</a>";}
-    else{echo "Erro: " . $conn->error;}
     $conn->close();
 }
+
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Criar Autor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../styles/style.css">
-    <title>Inserir Jogador no Banco</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
+
 <body>
-    
-    <form action="" method="POST">
-        <label>Nome: </label>
-        <input type="text" name="nome">
-        <br>
-        <label>Posição: </label>
-        <select name="positions" id="posi-select">
-            <option value="" selected disabled>Selecione...</option>
-            <option value="GOL">GOL</option>
-            <option value="ZAG">ZAG</option>
-            <option value="MEI">MEI</option>
-            <option value="ATA">ATA</option>
-        </select>
-        <br>
-        <label>Número da Camisa: </label>
-        <input type="text" name="num_cami">
-        <br>
-        <label>Time: </label>
-        <select name="times" id="time-select">
-            <option value="" selected disabled>Selecione...</option>
-            <?php
-            if($result->num_rows > 0){
-                while($row = $result->fetch_assoc()){
-                    echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";
-                }
-            }
-            ?>
-        </select>
-        <br>
-        <input type="submit" value="Criar">
-        <input type="button" value="Cancelar" onclick="window.location.href='read.php'">
-    </form>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid p-1 ms-5 me-5">
+            <a class="navbar-brand fs-2" href="#">Criar Autor</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row ms-5 mt-5 me-5">
+
+            <form action="" method="POST">
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" aria-describedby="Nome" placeholder="Nome">
+                </div>
+
+                <div class="mb-3">
+                    <label for="nacionalidade" class="form-label">Nacionalidade</label>
+                    <input type="text" class="form-control" id="nacionalidade" name="nacionalidade" placeholder="Nacionalidade" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ano_nascimento" class="form-label">Ano de Nascimento</label>
+                    <input type="text" class="form-control" id="ano_nascimento" name="ano_nascimento" placeholder="Ano de Nascimento" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Criar</button>
+            </form>
+        </div>
+
+    </div>
 
 </body>
-</html>

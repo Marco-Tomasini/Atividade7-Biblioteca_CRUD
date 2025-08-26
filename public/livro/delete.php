@@ -8,10 +8,10 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $id = (int) $_GET['id'];
 
-$sql = "DELETE FROM leitores WHERE id_leitor = $id";
+$sql = "DELETE FROM livros WHERE id_livro = $id";
 
 if ($conn->query($sql) === true) {
-    echo "Leitor excluído com sucesso.
+    echo "Livro excluído com sucesso.
         <a href='read.php'>Ver registros.</a>";
 } else {
     echo "Erro: " . $conn->error;
