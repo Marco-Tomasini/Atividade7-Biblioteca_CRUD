@@ -49,6 +49,7 @@ $result = $conn->query($sql);
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <a href="create.php" class="nav-item btn btn-outline-light">Adicionar Emprestimo</a>
+                <a href="../../index.php" class="nav-item btn btn-outline-light ms-0">Voltar</a>
             </div>
         </div>
     </nav>
