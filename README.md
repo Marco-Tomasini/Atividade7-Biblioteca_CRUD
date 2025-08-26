@@ -74,5 +74,3 @@ ATIVIDADE7/
 ```
 
 ---
-
-Qualquer dúvida, consulte os comentários nos arquivos PHP.
