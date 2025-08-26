@@ -91,7 +91,7 @@ $result = $conn->query($sql);
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="5">
+                        <td class="text-center" colspan="5">
                             <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
                                 <a href="?pagina=<?php echo $i; ?>" class="btn btn-primary m-1"><?php echo $i; ?></a>
                             <?php endfor; ?>
