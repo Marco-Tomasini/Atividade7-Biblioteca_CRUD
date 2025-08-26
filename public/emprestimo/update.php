@@ -2,18 +2,25 @@
 
 include '../db.php';
 
-$id_autor = $_GET['id'];
+$id_emprestimo = $_GET['id'];
 
-$sql = "SELECT * FROM autores WHERE id_autor='$id_autor'";
+$sql = "SELECT * FROM emprestimos WHERE id_emprestimo='$id_emprestimo'";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-    $name = $_POST['nome'];
-    $nacionalidade = $_POST['nacionalidade'];
-    $ano_nascimento = $_POST['ano_nascimento'];
+    $id_livro_fk = $_POST['id_livro_fk'];
+    $id_leitor_fk = $_POST['id_leitor_fk'];
+    $data_emprestimo = $_POST['data_emprestimo'];
+    $data_devolucao = $_POST['data_devolucao'];
 
-    $sql = "UPDATE autores SET nome='$name', nacionalidade='$nacionalidade', ano_nascimento='$ano_nascimento' WHERE id_autor='$id_autor'";
+    if (empty($data_devolucao)) {
+        $data_devolucao_sql = "NULL";
+    } else {
+        $data_devolucao_sql = "'$data_devolucao'";
+    }
+
+    $sql = "UPDATE emprestimos SET id_livro_fk='$id_livro_fk', id_leitor_fk='$id_leitor_fk', data_emprestimo='$data_emprestimo', data_devolucao=$data_devolucao_sql WHERE id_emprestimo='$id_emprestimo'";
 
     if ($conn->query($sql) === true) {
         echo "Registro atualizado com sucesso!
@@ -33,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Atualizar Autor</title>
+    <title>Atualizar Emprestimo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -43,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid p-1 ms-5 me-5">
-            <a class="navbar-brand fs-2" href="#">Atualizar Autor</a>
+            <a class="navbar-brand fs-2" href="#">Atualizar Emprestimo</a>
         </div>
     </nav>
 
@@ -52,18 +59,23 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
             <form action="" method="POST">
                 <div class="mb-3">
-                    <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $row['nome']; ?>" aria-describedby="Nome" placeholder="Nome" required>
+                    <label for="id_livro_fk" class="form-label">ID do Livro</label>
+                    <input type="text" class="form-control" id="id_livro_fk" name="id_livro_fk" value="<?php echo $row['id_livro_fk']; ?>" aria-describedby="ID do Livro" placeholder="ID do Livro" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="nacionalidade" class="form-label">Nacionalidade</label>
-                    <input type="text" class="form-control" id="nacionalidade" name="nacionalidade" value="<?php echo $row['nacionalidade']; ?>" placeholder="Nacionalidade" required>
+                    <label for="id_leitor_fk" class="form-label">ID do Leitor</label>
+                    <input type="text" class="form-control" id="id_leitor_fk" name="id_leitor_fk" value="<?php echo $row['id_leitor_fk']; ?>" placeholder="ID do Leitor" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="ano_nascimento" class="form-label">Ano de Nascimento</label>
-                    <input type="number" class="form-control" id="ano_nascimento" name="ano_nascimento" value="<?php echo $row['ano_nascimento']; ?>" placeholder="Ano de Nascimento" required>
+                    <label for="data_emprestimo" class="form-label">Data de Empréstimo</label>
+                    <input type="date" class="form-control" id="data_emprestimo" name="data_emprestimo" value="<?php echo $row['data_emprestimo']; ?>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="data_devolucao" class="form-label">Data de Devolução</label>
+                    <input type="date" class="form-control" id="data_devolucao" name="data_devolucao" value="<?php echo $row['data_devolucao']; ?>">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Atualizar</button>

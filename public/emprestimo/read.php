@@ -12,7 +12,7 @@ $offset = ($pagina - 1) * $max;
 
 
 // Total de registros
-$totalSql = "SELECT COUNT(*) as total FROM autores";
+$totalSql = "SELECT COUNT(*) as total FROM emprestimos";
 $totalResult = $conn->query($totalSql);
 $totalRow = $totalResult->fetch_assoc();
 $totalRegistros = $totalRow['total'];
@@ -21,7 +21,7 @@ $totalRegistros = $totalRow['total'];
 $totalPaginas = ceil($totalRegistros / $max);
 
 // Buscar registros da página atual
-$sql = "SELECT * FROM autores ORDER BY id_autor ASC LIMIT $max OFFSET $offset";
+$sql = "SELECT * FROM emprestimos ORDER BY id_emprestimo ASC LIMIT $max OFFSET $offset";
 $result = $conn->query($sql);
 ?>
 
@@ -33,7 +33,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Visualizar Autores</title>
+    <title>Visualizar Emprestimos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -43,12 +43,12 @@ $result = $conn->query($sql);
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid p-1 ms-5 me-5">
-            <a class="navbar-brand fs-2" href="#">Lista de Autores</a>
+            <a class="navbar-brand fs-2" href="#">Lista de Emprestimos</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <a href="create.php" class="nav-item btn btn-outline-light">Adicionar Autor</a>
+                <a href="create.php" class="nav-item btn btn-outline-light">Adicionar Emprestimo</a>
             </div>
         </div>
     </nav>
@@ -60,9 +60,10 @@ $result = $conn->query($sql);
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
-                        <th>Nacionalidade</th>
-                        <th>Ano de Nascimento</th>
+                        <th>ID do Livro</th>
+                        <th>ID do Leitor</th>
+                        <th>Data de Empréstimo</th>
+                        <th>Data de Devolução</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -70,20 +71,21 @@ $result = $conn->query($sql);
                     <?php if ($result->num_rows > 0): ?>
                         <?php while ($row = $result->fetch_assoc()): ?>
                             <tr>
-                                <td><?php echo $row['id_autor']; ?></td>
-                                <td><?php echo $row['nome']; ?></td>
-                                <td><?php echo $row['nacionalidade']; ?></td>
-                                <td><?php echo $row['ano_nascimento']; ?></td>
+                                <td><?php echo $row['id_emprestimo']; ?></td>
+                                <td><?php echo $row['id_livro_fk']; ?></td>
+                                <td><?php echo $row['id_leitor_fk']; ?></td>
+                                <td><?php echo $row['data_emprestimo']; ?></td>
+                                <td><?php echo $row['data_devolucao']; ?></td>
 
                                 <td>
-                                    <a href="update.php?id=<?php echo $row['id_autor']; ?>" class="nav-item btn btn-outline-dark">Editar Autor</a> |
-                                    <a href="delete.php?id=<?php echo $row['id_autor']; ?>" onclick="return confirm('Tem certeza que deseja excluir?')" class="nav-item btn btn-outline-dark">Excluir Autor</a>
+                                    <a href="update.php?id=<?php echo $row['id_emprestimo']; ?>" class="nav-item btn btn-outline-dark">Editar Emprestimo</a> |
+                                    <a href="delete.php?id=<?php echo $row['id_emprestimo']; ?>" onclick="return confirm('Tem certeza que deseja excluir?')" class="nav-item btn btn-outline-dark">Excluir Emprestimo</a>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="4">Nenhum autor encontrado.</td>
+                            <td colspan="4">Nenhum emprestimo encontrado.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
