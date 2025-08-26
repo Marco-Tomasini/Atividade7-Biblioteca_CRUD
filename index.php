@@ -17,7 +17,6 @@
 
     <div class="container-fluid dashboard">
         <div class="row">
-           <?php require_once __DIR__ . '/../../public/db.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -46,16 +45,23 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto p-1">
                             <li class="nav-item ms-5" >
-                                <a class="nav-link active" aria-current="page" href="../autor/read.php">Autores</a>
+                                <a class="nav-link active" aria-current="page" href="index.php">HOME</a>
                             </li>
-                            <li class="nav-item ms-5">
-                                <a class="nav-link" href="/public/livro/read.php">Livros</a>
+
+                            <li class="nav-item ms-5" >
+                                <a class="nav-link" href="/2025_atividades_marco/exercícios/Atividade7/public/autor/read.php">Autores</a>
                             </li>
+
                             <li class="nav-item ms-5">
-                                <a class="nav-link" href="/public/leitor/read.php">Leitores</a>
+                                <a class="nav-link" href="/2025_atividades_marco/exercícios/Atividade7/public/livro/read.php">Livros</a>
                             </li>
+
                             <li class="nav-item ms-5">
-                                <a class="nav-link" href="/public/emprestimo/read.php">Empréstimos</a>
+                                <a class="nav-link" href="/2025_atividades_marco/exercícios/Atividade7/public/leitor/read.php">Leitores</a>
+                            </li>
+
+                            <li class="nav-item ms-5">
+                                <a class="nav-link" href="/2025_atividades_marco/exercícios/Atividade7/public/emprestimo/read.php">Empréstimos</a>
                             </li>
                         </ul>
                     </div>

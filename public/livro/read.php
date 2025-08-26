@@ -48,8 +48,9 @@ $result = $conn->query($sql);
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <a href="create.php" class="nav-item btn btn-outline-light">Adicionar Livro</a>
+                <a href="../../index.php" class="nav-item btn btn-outline-light ms-0">Voltar</a>
             </div>
         </div>
     </nav>
